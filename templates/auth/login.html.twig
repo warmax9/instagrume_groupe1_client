@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AuthController!{% endblock %}
+
+{% block body %}
+<section class="auth p-3 d-flex justify-content-center align-items-center">
+    <div class="p-3 bg-light rounded">
+        <form class="d-flex flex-column">
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" class="form-control" id="username" required>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+            <a href="{{ path('register') }}">Pas de compte ?</a>
+        </form>
+    </div>
+</section>
+{% endblock %}
