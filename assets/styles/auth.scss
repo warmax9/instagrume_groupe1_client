@@ -4,4 +4,11 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    &__container {
+        transition: transform 1s;
+        transform: translateX(50%);
+        &.left{
+            transform: translateX(-50%);
+        }
+    }
 }

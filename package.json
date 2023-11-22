@@ -22,8 +22,5 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
-    },
-    "dependencies": {
-        "ionicons": "^7.2.1"
     }
 }
