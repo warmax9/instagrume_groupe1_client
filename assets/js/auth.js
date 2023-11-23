@@ -6,7 +6,7 @@ function switchAuth() {
     const url = toggleAuth ? '/register' : '/login';
 
     $.ajax({
-        url: url,
+        url: '/auth' + url,
         method: 'GET',
         success: (data) => {
             container.html(data);
