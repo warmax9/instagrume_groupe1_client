@@ -1,15 +1,16 @@
 const container = $('.auth__container');
 let toggleAuth = false;
 
-function switchAuth(url) {
+function switchAuth() {
     container.toggleClass("rounded-start rounded-end left");
+    const url = toggleAuth ? '/register' : '/login';
 
     $.ajax({
         url: url,
         method: 'GET',
         success: (data) => {
             container.html(data);
-            container.off("click", "#switch").on("click", "#switch", () => switchAuth(toggleAuth ? '/register' : '/login'));
+            toggleAuth = !toggleAuth;
         },
         error: () => {
             console.error('failed');
@@ -17,4 +18,8 @@ function switchAuth(url) {
     });
 }
 
-container.on("click", "#switch", () => switchAuth('/register'));
+$(document).ready(() => {
+    switchAuth();
+});
+
+container.on("click", "#switch", () => switchAuth());
