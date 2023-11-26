@@ -1,4 +1,21 @@
-$primary: darken(#6E56CF, 20%);
+$body-bg: #E9E8F8;
+$body-color: #090717;
+$primary: #8E87D9;
+$secondary: #C8C5ED;
+$tertiary-bg: #4137AE;
+
+/*
+dark
+#EAE8F8
+#080717
+#2D2678
+#15123B
+#5B51C8
+*/
+
+section {
+    height: 100vh
+}
 
 @import "~bootstrap/scss/bootstrap";
 @import "./auth.scss";
