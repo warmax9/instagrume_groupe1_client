@@ -1,3 +1,3 @@
 import "./styles/global.scss";
 import 'bootstrap';
-import "./js/auth";
+import "./js/index";

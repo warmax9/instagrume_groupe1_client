@@ -2,20 +2,23 @@ $body-bg: #E9E8F8;
 $body-color: #090717;
 $primary: #8E87D9;
 $secondary: #C8C5ED;
-$tertiary-bg: #4137AE;
+$body-tertiary-bg: #4137AE;
 
-/*
-dark
-#EAE8F8
-#080717
-#2D2678
-#15123B
-#5B51C8
-*/
+$body-bg-dark: #080717;
+$body-color-dark: #EAE8F8;
+$primary-dark: #2D2678;
+$secondary-dark: #15123B;
+$body-tertiary-bg-dark: #5B51C8;
+
+@import "~bootstrap/scss/bootstrap";
+@import "./auth.scss";
+@import "./nav.scss";
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
 
 section {
     height: 100vh
 }
-
-@import "~bootstrap/scss/bootstrap";
-@import "./auth.scss";
