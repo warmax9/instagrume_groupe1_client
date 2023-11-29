@@ -1,32 +1,38 @@
 const Encore = require('@symfony/webpack-encore');
+const path = require('path');
+const fs = require('fs');
 
-// Manually configure the runtime environment if not already configured yet by the "encore" command.
-// It's useful when you use tools that rely on webpack.config.js file.
+const getDir = source =>
+    fs.readdirSync(source, { withFileTypes: true})
+      .filter(dirent => dirent.isDirectory())
+      .map(dirent => dirent.name);
+
+const jsPath = "./assets/js/"
+const scssPath = "./assets/styles/"
+
 if (!Encore.isRuntimeEnvironmentConfigured()) {
     Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
 }
 
-Encore
-    // directory where compiled assets will be stored
-    .setOutputPath('public/build/')
-    // public path used by the web server to access the output path
-    .setPublicPath('/build')
-    // only needed for CDN's or subdirectory deploy
-    //.setManifestKeyPrefix('build/')
+getDir(path.join(__dirname, jsPath)).forEach(entryName => {
+    Encore.addEntry(entryName, jsPath + entryName + '/index.js')
+})
 
-    /*
-     * ENTRY CONFIG
-     *
-     * Each entry will result in one JavaScript file (e.g. app.js)
-     * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
-     */
+getDir(path.join(__dirname, scssPath)).forEach(entryName => {
+    console.log(entryName+ '_css');
+    console.log(scssPath + entryName + '/index.scss');
+    Encore.addEntry(entryName + '_css', scssPath + entryName + '/index.scss')
+})
+
+Encore
+    .setOutputPath('public/build/')
+    .setPublicPath('/build')
+
+
     .addEntry('app', './assets/app.js')
 
-    // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 
-    // will require an extra script tag for runtime.js
-    // but, you probably want this, unless you're building a single-page app
     .enableSingleRuntimeChunk()
 
     /*

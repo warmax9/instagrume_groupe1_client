@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block links %}
+    {{ encore_entry_link_tags('auth_css') }}
+    {{ encore_entry_script_tags('auth') }}
+{% endblock %}
+
 {% block title %}Hello AuthController!{% endblock %}
 
 {% block nav %}{% endblock %}
