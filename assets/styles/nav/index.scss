@@ -36,13 +36,17 @@
                 position: fixed;
                 top: 0;
                 left: 0;
-                height: 100vh;
-                width: 100vh;
+                height: 100%;
+                width: 100%;
                 margin: 0;
                 background: rgba($color: #080717, $alpha: 0.9);
                 visibility: hidden;
                 opacity: 0;
                 transition: all 1s ease;
+                flex-direction: column;
+                justify-content: center;
+                gap: 1rem;
+                font-size: 1.5rem;
                 &.active{
                     visibility: visible;
                     opacity: 1;
