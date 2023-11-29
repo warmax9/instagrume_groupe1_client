@@ -6,7 +6,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class Api
 {
-    private string $url = 'http://localhost:3000';
+    private string $url = 'http://localhost:3000/api';
     public function __construct(
         private readonly HttpClientInterface $client
     ) {
@@ -20,7 +20,7 @@ class Api
     {
         $response = $this->client->request(
             $method,
-            $url,
+            $this->url . $url,
             $data ? [ 'body' => $data ] : []
         );
         $content = $response->getContent();
