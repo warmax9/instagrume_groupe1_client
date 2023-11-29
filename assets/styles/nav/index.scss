@@ -31,16 +31,35 @@
             margin: 0;
             margin-left: 1rem;
         }
+        @media screen and (max-width: 768px) {
+            &__items {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 100vh;
+                margin: 0;
+                background: rgba($color: #080717, $alpha: 0.9);
+                visibility: hidden;
+                opacity: 0;
+                transition: all 1s ease;
+                &.active{
+                    visibility: visible;
+                    opacity: 1;
+                }
+            }
+        }
     }
 
     &__utils {
         display: flex;
         align-items: center;
         &__hamburger{
-            background-color: transparent;
+            display: none;
+            background: transparent;
             border: none;
-            display: flex;
-            padding: 0;
+            padding: 0.5rem 1rem;
+            z-index: 99;
             .line {
                 fill: none;
                 stroke: currentColor;
@@ -78,6 +97,11 @@
                     stroke-dashoffset: -134;
                     stroke-width: 6;
                 }
+            }
+        }
+        @media screen and (max-width: 768px) {
+            &__hamburger {
+                display: flex;
             }
         }
     }
