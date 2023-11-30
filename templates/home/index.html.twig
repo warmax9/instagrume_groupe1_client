@@ -37,7 +37,7 @@
                     <ion-icon name="heart-dislike-outline"></ion-icon>
                 </div>
             </div>
-            <a href="#" class="btn btn-primary">En savoir plus</a>
+            <a href={{ path('post', {id: post.id}) }} class="btn btn-primary">En savoir plus</a>
         </div>
       </div>
     {% endfor %}

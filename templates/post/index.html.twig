@@ -2,8 +2,69 @@
 
 {% block title %}Hello PostController!{% endblock %}
 
+{% block links %}
+    {{ encore_entry_link_tags('post_css') }}
+{% endblock %}
+
 {% block body %}
-<pre>
-    {{ dump(post) }}
-</pre>
+<section class="post">
+    <img class="object-fit-cover w-100" src={{ "http://127.0.0.1:3000/images/post/" ~ post.image|e }} alt="">
+    <div class="post__wrappper d-flex flex-column px-3 py-2">
+        <div class="d-flex">
+            <img style="height: 2rem;" src={{ "http://127.0.0.1:3000/images/user/" ~ post.user.photo|e }} alt="" class="rounded-circle">
+            <h1>{{ post.user.username|e }}</h1>
+        </div>
+        <div>
+            <h2>Description</h2>
+            <p>{{ post.description|e }}</p>
+        </div>
+        <div>
+            <h2>Commentaires ({{post.commentaires|length}})</h2>
+            {% for com in post.commentaires %}
+                <div class="post__wrappper__com rounded px-3 py-2">
+                    <div class="d-flex">
+                        <img style="height: 2rem;" src={{ "http://127.0.0.1:3000/images/user/" ~ com.user.photo|e }} alt="" class="rounded-circle">
+                        <h1>{{ com.user.username|e }}</h1>
+                    </div>
+                    <p>{{ com.content|e }}</p>
+                    {% set likes = 0 %}
+                    {% set dislikes = 0 %}
+        
+                    {% for like in post.likes %}
+                        {% if like.value == true %}
+                            {% set likes = likes + 1 %}
+                        {% elseif like.value == false %}
+                            {% set dislikes = dislikes + 1 %}
+                        {% endif %}
+                    {% endfor %}
+                    <div class="d-flex justify-content-around">
+                        <div class="d-flex align-items-center">
+                            <p class="m-0">{{ likes }}</p>
+                            <ion-icon name="heart-outline"></ion-icon>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <p class="m-0">{{ dislikes }}</p>
+                            <ion-icon name="heart-dislike-outline"></ion-icon>
+                        </div>
+                    </div>
+                    {% if com.commentaires_children|length > 0 %}
+                        {% for child in com.commentaires_children %}
+                            <div class="px-3 py-2">
+                                <h2>Reponse</h2>
+                                <div class="d-flex">
+                                    <img style="height: 2rem;" src={{ "http://127.0.0.1:3000/images/user/" ~ child.user.photo|e }} alt="" class="rounded-circle">
+                                    <h1>{{ child.user.username|e }}</h1>
+                                </div>
+                                <p>{{ child.content|e }}</p>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <pre>
+        {{ dump(post) }}
+    </pre>
+</section>
 {% endblock %}
