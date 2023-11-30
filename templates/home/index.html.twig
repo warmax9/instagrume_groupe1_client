@@ -12,7 +12,10 @@
     <div class="home__post rounded">
         <img src={{ "http://127.0.0.1:3000/images/post/" ~ post.image|e }} alt="..." class="rounded-top w-100">
         <div class="p-3">
-            <h5>Card title</h5>
+            <div class="d-flex home__post__user">
+                <img style="height: 2rem;" src={{ "http://127.0.0.1:3000/images/user/" ~ post.user.photo|e }} alt="" class="rounded-circle">
+                <h5>{{ post.user.username|e }}</h5>
+            </div>
             <p>{{ post.description|e }}</p>
             {% set likes = 0 %}
             {% set dislikes = 0 %}

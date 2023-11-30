@@ -8,6 +8,8 @@ function InstallDependencies {
 
 # .\run.ps1 run
 function RunDevelopment {
+    Write-Host "Clear cache..."
+    php bin/console cache:clear
     Write-Host "Running npm dev..."
     npm run dev
     Write-Host "Starting Symfony server..."

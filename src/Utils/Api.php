@@ -23,8 +23,7 @@ class Api
             $this->url . $url,
             $data ? [ 'body' => $data ] : []
         );
-        $content = $response->getContent();
-        $content = $response->toArray();
+        $content = $response->getContent() == 'null' ? $response->getContent() : $response->toArray();
         return $content;
     }
 }
