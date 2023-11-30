@@ -17,7 +17,7 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home', methods: ['GET'])]
     public function index(): Response
     {
-        $this->api->fetch("/posts", "GET", null);
-        return $this->render('home/index.html.twig');
+        $posts = $this->api->fetch("/posts", "GET", null);
+        return $this->render('home/index.html.twig', ["posts" => $posts]);
     }
 }

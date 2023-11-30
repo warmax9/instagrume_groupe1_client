@@ -60,7 +60,7 @@
         align-items: center;
         &__hamburger{
             display: none;
-            background: transparent;
+            background: none;
             border: none;
             padding: 0.5rem 1rem;
             z-index: 99;
@@ -85,7 +85,7 @@
                 stroke-dasharray: 60 207;
                 stroke-width: 6;
             }
-            .opened{
+            &.opened{
                 .line1 {
                     stroke-dasharray: 90 207;
                     stroke-dashoffset: -134;

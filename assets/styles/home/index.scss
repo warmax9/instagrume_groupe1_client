@@ -1,0 +1,17 @@
+.home {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+
+    &__post {
+        height: fit-content;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+
+        img {
+            object-fit: cover;
+            aspect-ratio: 6/7;
+        }
+
+        body[data-bs-theme=dark] & {
+            box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.15);
+        }
+    }
+}
