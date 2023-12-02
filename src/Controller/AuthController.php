@@ -31,7 +31,9 @@ class AuthController extends AbstractController
             $data = $this->jsonConverter->encodeToJson(['username' => $username, 'password' => $password]);
             $responseObject = $this->api->fetch("/login", "POST" , $data);
             $session = $request->getSession();
-            $session->set('token',  $responseObject['token']);
+            $session->set('token', $responseObject['token']);
+            $user = $this->api->fetch("/myself", "GET" , null);
+            $session->set('profile_picture', $user['photo']);
             return $this->redirect('/');
         }
         return $this->render('auth/login.html.twig');

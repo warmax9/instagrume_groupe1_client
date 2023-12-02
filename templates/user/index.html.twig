@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+<pre>
+    {{ dump(user) }}
+</pre>
+<section>
+    <form>
+        <div class="mb-3">
+            <label for="picture" class="form-label">Photo de profile</label>
+            <input type="file" id="picture" src="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="username" class="form-label">Pseudo</label>
+          <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" value={{ user.username }}>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Mot de Passe</label>
+          <input type="password" class="form-control" id="password" value={{ user.password }}>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+</section>
+{% endblock %}

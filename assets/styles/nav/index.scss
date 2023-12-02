@@ -36,6 +36,10 @@
     }
 
     &__utils {
+        img{
+            aspect-ratio: 1/1;
+            object-fit: cover;
+        }
         &__hamburger{
             display: none;
             .line {
