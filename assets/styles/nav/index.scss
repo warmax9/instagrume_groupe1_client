@@ -1,13 +1,4 @@
 .nav {
-    display: flex;
-    justify-content: space-between;
-    padding: .5rem 1rem;
-    border-bottom: solid white 1px;
-
-    a {
-        padding: .5rem 1rem;
-    }
-
     a:hover,
     ion-icon:hover {
         opacity: 0.6;
@@ -15,19 +6,8 @@
     }
 
     &__links {
-        display: flex;
-        align-items: center;
-
-        &__brand {
-            display: flex;
-            align-items: center;
-        }
-
         &__items {
-            display: flex;
-            align-items: center;
             list-style: none;
-            padding: 0;
             margin: 0;
             margin-left: 1rem;
         }
@@ -56,14 +36,8 @@
     }
 
     &__utils {
-        display: flex;
-        align-items: center;
         &__hamburger{
             display: none;
-            background: none;
-            border: none;
-            padding: 0.5rem 1rem;
-            z-index: 99;
             .line {
                 fill: none;
                 stroke: currentColor;
