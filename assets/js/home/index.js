@@ -1,5 +1,5 @@
 const like = document.querySelectorAll('.like');
-const dislike = document.querySelector('.dislike');
+const dislike = document.querySelectorAll('.dislike');
 
 
 like.forEach((e) => {
@@ -11,28 +11,30 @@ like.forEach((e) => {
             "commentaire_id": null
         };
 
-        fetch('/post/like', {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(value) // Convertir l'objet en chaîne JSON
-        })
-        .then(response => response.json())
-        .then(result => {
-            console.log('Réponse du serveur:', result);
-            // Traitez la réponse du serveur ici
-        })
-        .catch(error => {
-            console.error('Erreur lors de la requête fetch:', error);
-            // Gérez les erreurs ici
-        });
-
-        console.log(value);
+        send(value);
     });
 });
 
 
-dislike.addEventListener('click', () => {
-    console.log('coucou')
-})
+dislike.forEach((e) => {
+    e.addEventListener('click', () => {
+        const value = {
+            "value": false,
+            "post_id": e.dataset.postid,
+            "user_id": e.dataset.userid,
+            "commentaire_id": null
+        };
+        console.log(value);
+        send(value);
+    });
+});
+
+function send(value){
+    fetch('/post/like', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(value)
+    })
+}
