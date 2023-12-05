@@ -40,6 +40,14 @@
             aspect-ratio: 1/1;
             object-fit: cover;
         }
+        &__search{
+            &__bar{
+                font-size: 1.5rem;
+                input{
+                    outline: none;
+                }
+            }
+        }
         &__hamburger{
             display: none;
             .line {
