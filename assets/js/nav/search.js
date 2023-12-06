@@ -17,7 +17,6 @@ searchInput.addEventListener('input', async () => {
         `;
 
             userContainer.appendChild(userDiv);
-            console.log(user);
         });
     } else {
         userContainer.innerHTML = "";
