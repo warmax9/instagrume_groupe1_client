@@ -23,23 +23,26 @@ class PostController extends AbstractController
         $post = $this->api->fetch(sprintf("/posts/%d", $id), "GET", null);
         return $this->render('post/index.html.twig', ['post' => $post]);
     }
+
     
-    #[Route('/like', name:"post", methods: ['POST'])]
+    #[Route('/like', methods: ['POST'])]
     public function likePost(Request $request){
         $data = json_decode($request->getContent(), true);
         $user = $this->api->fetch("/myself", "GET", null);
         $data["user_id"] = $user['id'];
         $response = $this->api->fetch("/likes", "POST" , $this->jsonConverter->encodeToJson($data));
-        // $response le like déja existant que l'utisateur à laissé sur ce post, si null alors un like vient d'être crée
-        if($response['value'] != $data['value']){
-            $data["id"] = $response['id'];
-            $this->api->fetch("/likes", "PUT" , $this->jsonConverter->encodeToJson($data));
-            return new Response($this->jsonConverter->encodeToJson(["reponse" => "modif ok"]));
+        $result["action"] = "creation";
+        if(!isset($response['result'])){
+            if($response['value'] != $data['value']){
+                $data["id"] = $response['id'];
+                $this->api->fetch("/likes", "PUT" , $this->jsonConverter->encodeToJson($data));
+                $result["action"] = "modification";
+            }
+            else{
+                $response = $this->api->fetch("/likes/". $response['id'], "DELETE", null);
+                $result["action"] = "supression";
+            }
         }
-        else{
-            $response = $this->api->fetch("/likes/". $response['id'], "DELETE", null);
-            return new Response($this->jsonConverter->encodeToJson(["reponse" => "supression ok"]));
-        }
-        return new Response($this->jsonConverter->encodeToJson($response));
+        return new Response($this->jsonConverter->encodeToJson($result));
     }
 }

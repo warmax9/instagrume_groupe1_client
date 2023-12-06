@@ -30,11 +30,11 @@
             {% endfor %}
             <div class="d-flex justify-content-around">
                 <div class="d-flex align-items-center">
-                    <p class="m-0">{{ likes }}</p>
+                    <p class="m-0 cpt-like">{{ likes }}</p>
                     <ion-icon class="like" data-postId='{{ post.id|e }}' data-userId='{{ post.user.id|e }}'  name="heart-outline"></ion-icon>
                 </div>
                 <div class="d-flex align-items-center">
-                    <p class="m-0">{{ dislikes }}</p>
+                    <p class="m-0 cpt-dislike">{{ dislikes }}</p>
                     <ion-icon class="dislike" data-postId='{{ post.id|e }}' data-userId='{{ post.user.id|e }}' name="heart-dislike-outline"></ion-icon>
                 </div>
             </div>
