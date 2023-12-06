@@ -47,6 +47,11 @@
                     outline: none;
                 }
             }
+            &__user{
+                img{
+                    height: 1.5rem;
+                }
+            }
         }
         &__hamburger{
             display: none;

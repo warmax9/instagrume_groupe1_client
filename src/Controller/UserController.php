@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Utils\Api;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,10 +29,17 @@ class UserController extends AbstractController
     }
 
     #[Route('/userByTerm', methods: ['GET', 'POST'])]
-    public function findUserByTerm(Request $request): Response
+    public function findUserByTerm(Request $request): JsonResponse
     {
         $searchTerm = $request->query->get('searchTerm');
         $data = $this->api->fetch('/userByTerm?searchTerm='.$searchTerm, 'GET', null);
-        return new Response($data);
+        return new JsonResponse($data);
+    }
+
+    #[Route('/user/{id}', name: 'userById')]
+    public function userById($id): Response
+    {
+        $user = $this->api->fetch('/user/'.$id, 'GET', null);
+        return $this->render('user/display.html.twig', ['user' => $user]);
     }
 }
