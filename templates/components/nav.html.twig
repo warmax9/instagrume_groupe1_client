@@ -14,7 +14,7 @@
             </li>
         </ul>
     </div>
-    <div class="nav__utils d-flex align-items-center">
+    <div class="nav__utils d-flex align-items-center gap-2">
         <div class="nav__utils__search d-flex">
             <ion-icon class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#searchModal" name="search-outline"></ion-icon>
             <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
@@ -33,7 +33,10 @@
             </div>
         </div>
         {% if app.session.get('token')|default(null) %}
-            <a href="{{ path('user') }}" class="py-2 px-3">
+            <a href="{{ path('logout') }}">
+                <ion-icon class="btn btn-primary" name="log-out-outline"></ion-icon>
+            </a>
+            <a href="{{ path('user') }}">
                 <img src={{ "http://127.0.0.1:3000/images/user/" ~ app.session.get('profile_picture') }} alt="" class="rounded-circle" style="height: 2rem;">
             </a>
         {% else %}
@@ -42,7 +45,7 @@
             </a>
         {% endif %}
         <ion-icon size="large" class="toogle-theme" name="moon-outline"></ion-icon>
-        <button class="nav__utils__hamburger border-0 bg-transparent py-2 px-3 z-3" aria-label="Main Menu">
+        <button class="nav__utils__hamburger border-0 bg-transparent p-0 z-3" aria-label="Main Menu">
             <svg width="32" height="32" viewBox="0 0 100 100">
               <path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
               <path class="line line2" d="M 20,50 H 80" />

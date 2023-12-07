@@ -4,6 +4,7 @@ namespace App\Utils;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Api
 {
@@ -33,6 +34,11 @@ class Api
             $this->url . $url,
             $options
         );
+
+        if($response->getStatusCode() === 401){
+            $this->requestStack->getSession()->clear();
+            return new RedirectResponse('/');
+        }
         
         $content = $response->getContent() == 'null' ? $response->getContent() : $response->toArray();
         return $content;
