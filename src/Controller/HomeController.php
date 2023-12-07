@@ -18,6 +18,7 @@ class HomeController extends AbstractController
     public function index(): Response
     {
         $posts = $this->api->fetch("/posts", "GET", null);
-        return $this->render('home/index.html.twig', ["posts" => $posts]);
+        $user = $this->api->fetch("/myself", "GET", null);
+        return $this->render('home/index.html.twig', ["posts" => $posts, "myId" => $user["id"]]);
     }
 }

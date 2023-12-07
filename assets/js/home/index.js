@@ -7,10 +7,10 @@ like.forEach((e) => {
             "value": true,
             "post_id": e.dataset.postid,
             "user_id": e.dataset.userid,
-            "commentaire_id": null
+            "commentaire_id": e.dataset.commentaireid
         };
 
-        send(value, e.previousElementSibling);
+        send(value, e.previousElementSibling, e);
     });
 });
 
@@ -21,19 +21,18 @@ dislike.forEach((e) => {
             "value": false,
             "post_id": e.dataset.postid,
             "user_id": e.dataset.userid,
-            "commentaire_id": null
+            "commentaire_id": e.dataset.commentaireid
         };
-        console.log(value);
-        send(value, e.previousElementSibling);
+        send(value, e.previousElementSibling, e);
     });
 });
 
-function send(value, element) {
+function send(value, element, icon) {
     const currentNumber = parseInt(element.textContent, 10);
-    fetch('/post/like', {
+    let url = (value.post_id !== undefined) ? '/like/post' : '/like/commentaire';
+    fetch(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
         },
         body: JSON.stringify(value),
     })
@@ -45,23 +44,34 @@ function send(value, element) {
                 switch (data.action) {
                     case "creation":
                         element.textContent = currentNumber + 1;
+                        icon.style.color = "red";
                         break;
                     case "modification":
                         if(element.classList.contains('cpt-like')){
-                            console.log(element.parentElement.parentElement.querySelector(".cpt-dislike"));
-                            var otherCpt = element.parentElement.parentElement.querySelector(".cpt-dislike");
+                            var divParent =  element.parentElement.parentElement;
+                            var otherCpt = divParent.querySelector(".cpt-dislike");
                             otherCpt.textContent = parseInt(otherCpt.textContent, 10) - 1;
+                            otherIcon = divParent.querySelector('ion-icon.dislike');
+                            otherIcon.removeAttribute('color');
+                            otherIcon.style.color = "white";
                             element.textContent = currentNumber + 1;
+                            icon.style.color = "red";
                         }
                         else{
-                            var otherCpt = element.parentElement.parentElement.querySelector(".cpt-like");
+                            var divParent =  element.parentElement.parentElement;
+                            var otherCpt = divParent.querySelector(".cpt-like");
                             otherCpt.textContent = parseInt(otherCpt.textContent, 10) - 1;
+                            otherIcon = divParent.querySelector('ion-icon.like');
+                            otherIcon.removeAttribute('color');
+                            otherIcon.style.color = "white";
                             element.textContent = currentNumber + 1;
+                            icon.style.color = "red";
                         }
                         break;
                         default :
                             if(currentNumber > 0){
                                 element.textContent = currentNumber - 1;
+                                icon.style.color = "white";
                             }
                 }
             }

@@ -21,28 +21,7 @@ class PostController extends AbstractController
     public function index($id): Response
     {
         $post = $this->api->fetch(sprintf("/posts/%d", $id), "GET", null);
-        return $this->render('post/index.html.twig', ['post' => $post]);
-    }
-
-    
-    #[Route('/like', methods: ['POST'])]
-    public function likePost(Request $request){
-        $data = json_decode($request->getContent(), true);
-        $user = $this->api->fetch("/myself", "GET", null);
-        $data["user_id"] = $user['id'];
-        $response = $this->api->fetch("/likes", "POST" , $this->jsonConverter->encodeToJson($data));
-        $result["action"] = "creation";
-        if(!isset($response['result'])){
-            if($response['value'] != $data['value']){
-                $data["id"] = $response['id'];
-                $this->api->fetch("/likes", "PUT" , $this->jsonConverter->encodeToJson($data));
-                $result["action"] = "modification";
-            }
-            else{
-                $response = $this->api->fetch("/likes/". $response['id'], "DELETE", null);
-                $result["action"] = "supression";
-            }
-        }
-        return new Response($this->jsonConverter->encodeToJson($result));
+        $mySelf = $user = $this->api->fetch("/myself", "GET", null);
+        return $this->render('post/index.html.twig', ['post' => $post, 'myId' => $mySelf['id']]);
     }
 }
