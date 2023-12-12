@@ -19,9 +19,11 @@ class HomeController extends AbstractController
     {
         $posts = $this->api->fetch("/posts", "GET", null);
         $user = $this->api->fetch("/myself", "GET", null);
+        /*
+        $myId = null;
         if(isset($user["id"])){
             $myId = $user["id"];
-        }
-        return $this->render('home/index.html.twig', ["posts" => $posts, "myId" => $user["id"]]);
+        }*/
+        return $this->render('home/index.html.twig', ["posts" => $posts, "myId" => 1]);
     }
 }
