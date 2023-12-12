@@ -3,24 +3,48 @@
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
-<pre>
-    {{ dump(user) }}
-</pre>
-<section>
-    <form>
-        <div class="mb-3">
-            <label for="picture" class="form-label">Photo de profile</label>
-            <input type="file" id="picture" src="form-control">
-        </div>
-        <div class="mb-3">
-          <label for="username" class="form-label">Pseudo</label>
-          <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" value={{ user.username }}>
-        </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Mot de Passe</label>
-          <input type="password" class="form-control" id="password" value={{ user.password }}>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+<section class="h-auto">
+  <div class="px-3 py-2">
+    <h1>Information</h1>
+    <form enctype='multipart/form-data' method="post">
+      <div class="mb-3">
+        <label for="img" class="form-label">Image</label>
+        <input name="img" class="form-control" type="file" id="img">
+      </div>
+      <div class="mb-3">
+        <label for="username" class="form-label">Pseudo</label>
+        <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" value={{ user.username }}>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Mot de Passe</label>
+        <input type="password" class="form-control" id="password">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
 </section>
+{% if user.is_modo %}
+<section class="px-3 py-2">
+  <h1>Admin</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+{% endif %}
+
 {% endblock %}
