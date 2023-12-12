@@ -51,4 +51,7 @@
       </div>
     {% endfor %}
 </section>
+{% if app.session.get('token')|default(null) %}
+    {% include "./components/modalpost.html.twig" %}
+{% endif %}
 {% endblock %}

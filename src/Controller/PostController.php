@@ -27,4 +27,21 @@ class PostController extends AbstractController
         }
         return $this->render('post/index.html.twig', ['post' => $post, 'myId' => null]);
     }
+
+    #[Route('/', name: 'post_add', methods: ['GET', 'POST'])]
+    public function add(Request $request)
+    {
+        $user = $this->api->fetch("/myself", "GET", null);
+
+        $data= [];
+        $data['image'] = base64_encode(file_get_contents($request->files->get('img')->getPathname()));
+        if(is_array($user)){
+            $data["user_id"] = $user['id'];
+        }
+        $data['description'] = $request->request->get('description');
+
+        $this->api->fetch('/posts', "POST", $this->jsonConverter->encodeToJson($data));
+
+        return $this->redirectToRoute('home');
+    }
 }
