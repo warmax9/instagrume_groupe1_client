@@ -9,23 +9,26 @@
 
 {% block body %}
 <section class="post">
-    <img class="object-fit-cover w-100" src={{ "http://127.0.0.1:3000/images/post/" ~ post.image|e }} alt="">
+    <div class="position-relative w-100">
+        <img class="object-fit-cover w-100" src={{ "http://127.0.0.1:3000/images/post/" ~ post.image|e }} alt="">
+        <div class="post__overlay">
+            <div class="d-flex">
+                <img style="height: 2rem;" src={{ "http://127.0.0.1:3000/images/user/" ~ post.user.photo|e }} alt="" class="rounded-circle">
+                <h1 class="ms-2">{{ post.user.username|e }}</h1>
+            </div>
+            <div class="mb-3">
+                <p>{{ post.description|e }}</p>
+            </div>
+        </div>
+    </div>
     <div class="post__wrappper d-flex flex-column px-3 py-2">
-        <div class="d-flex">
-            <img style="height: 2rem;" src={{ "http://127.0.0.1:3000/images/user/" ~ post.user.photo|e }} alt="" class="rounded-circle">
-            <h1>{{ post.user.username|e }}</h1>
-        </div>
         <div>
-            <h2>Description</h2>
-            <p>{{ post.description|e }}</p>
-        </div>
-        <div>
-            <h2>Commentaires ({{post.commentaires|length}})</h2>
+            <h2 class="mb-2">Commentaires ({{post.commentaires|length}})</h2>
             {% for com in post.commentaires %}
                 <div class="post__wrappper__com rounded px-3 py-2">
                     <div class="d-flex">
                         <img style="height: 2rem;" src={{ "http://127.0.0.1:3000/images/user/" ~ com.user.photo|e }} alt="" class="rounded-circle">
-                        <h1>{{ com.user.username|e }}</h1>
+                        <h1 class="ms-2">{{ com.user.username|e }}</h1>
                     </div>
                     <p>{{ com.content|e }}</p>
                     {% set likes = 0 %}
@@ -48,11 +51,11 @@
 
                     <div class="d-flex justify-content-around">
                         <div class="d-flex align-items-center">
-                            <p class="m-0 cpt-like">{{ likes }}</p>
+                            <p class="m-0 cpt-like m-1">{{ likes }}</p>
                             <ion-icon class="like" data-commentaireId='{{ com.id|e }}' data-userId='{{ post.user.id|e }}' name="heart-outline" {% if userHasLiked == 1 %} color="danger"{% endif %}></ion-icon>
                         </div>
                         <div class="d-flex align-items-center">
-                            <p class="m-0 cpt-dislike">{{ dislikes }}</p>
+                            <p class="m-0 cpt-dislike m-1">{{ dislikes }}</p>
                             <ion-icon class="dislike" data-commentaireId='{{ com.id|e }}' data-userId='{{ post.user.id|e }}' name="heart-dislike-outline" {% if userHasDisliked == 1 %} color="danger"{% endif %}></ion-icon>
                         </div>
                     </div>
@@ -75,22 +78,22 @@
                                     {% endif %}
                                 {% endif %}
                         {% endfor %}
-                            <div class="px-3 py-2">
-                                <h2>Reponse</h2>
+                            <div class="px-3 py-2 ms-5">
+                                <h3>Reponse</h3>
                                 <div class="d-flex">
                                     <img style="height: 2rem;" src={{ "http://127.0.0.1:3000/images/user/" ~ child.user.photo|e }} alt="" class="rounded-circle">
-                                    <h1>{{ child.user.username|e }}</h1>
+                                    <h3 class="ms-2">{{ child.user.username|e }}</h3>
                                 </div>
                                 <p>{{ child.content|e }}</p>
                             </div>
                             <div class="d-flex justify-content-around">
                                 <div class="d-flex align-items-center">
-                                    <p class="m-0 cpt-like">{{ likes }}</p>
-                                    <ion-icon class="like" data-commentaireId='{{ child.id|e }}' data-userId='{{ post.user.id|e }}' name="heart-outline" {% if userHasLiked == 1 %} color="danger"{% endif %}></ion-icon>
-                                </div>
+                                    <p class="m-0 cpt-like m-1">{{ likes }}</p>
+                                    <ion-icon class="like m-1" data-commentaireId='{{ child.id|e }}' data-userId='{{ post.user.id|e }}' name="heart-outline" {% if userHasLiked == 1 %} color="danger"{% endif %}></ion-icon>
+                                </div> 
                                 <div class="d-flex align-items-center">
-                                    <p class="m-0 cpt-dislike">{{ dislikes }}</p>
-                                    <ion-icon class="dislike" data-commentaireId='{{ child.id|e }}' data-userId='{{ post.user.id|e }}' name="heart-dislike-outline" {% if userHasDisliked == 1 %} color="danger"{% endif %}></ion-icon>
+                                    <p class="m-0 cpt-dislike m-1">{{ dislikes }}</p>
+                                    <ion-icon class="dislike m-1" data-commentaireId='{{ child.id|e }}' data-userId='{{ post.user.id|e }}' name="heart-dislike-outline" {% if userHasDisliked == 1 %} color="danger"{% endif %}></ion-icon>
                                 </div>
                             </div>
                         {% endfor %}

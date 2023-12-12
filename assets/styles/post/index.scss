@@ -1,17 +1,47 @@
-.post{
-    img{
+.post {
+    img {
         aspect-ratio: 3/1;
     }
+    @media screen and (max-width: 768px) {
+        img {
+            aspect-ratio: 3/2;
+        }
+    }
+
     &__wrappper {
-        img{
+        img {
             aspect-ratio: 1/1;
         }
-        &__com{
+
+        &__com {
             height: fit-content;
             box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+
             body[data-bs-theme=dark] & {
                 box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.15);
             }
         }
     }
+
+    p {
+        margin-bottom: 2px;
+    }
+
+    &__overlay {
+        img {
+            aspect-ratio: 1/1;
+        }
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* couleur d'arrière-plan semi-transparente */
+        color: white;
+        /* couleur du texte */
+        padding: 20px;
+        /* marge intérieure pour le contenu */
+        box-sizing: border-box;
+    }
+
 }

@@ -12,6 +12,13 @@
             <h1>{{ user.username }}</h1>
         </div>
     </div>
+    <main class="d-grid">
+        {% for post in user.post %}
+            <a href="/post/{{post.id}}" class="m-1">
+                <img class="w-100"  src={{ "http://127.0.0.1:3000/images/post/" ~ post.image|e }} alt="" >
+            </a>
+        {% endfor %}
+    </main>
     <pre>
         {{ dump(user) }}
     </pre>
