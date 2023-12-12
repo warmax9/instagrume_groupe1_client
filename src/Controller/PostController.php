@@ -22,6 +22,9 @@ class PostController extends AbstractController
     {
         $post = $this->api->fetch(sprintf("/posts/%d", $id), "GET", null);
         $mySelf = $user = $this->api->fetch("/myself", "GET", null);
-        return $this->render('post/index.html.twig', ['post' => $post, 'myId' => $mySelf['id']]);
+        if(is_array($user)){
+            return $this->render('post/index.html.twig', ['post' => $post, 'myId' => $mySelf['id']]);
+        }
+        return $this->render('post/index.html.twig', ['post' => $post, 'myId' => null]);
     }
 }
