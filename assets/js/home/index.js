@@ -1,28 +1,14 @@
-const like = document.querySelectorAll('.like');
-const dislike = document.querySelectorAll('.dislike');
+const likes = document.querySelectorAll(".like:not(.dislike),.dislike:not(.like)");
 
-like.forEach((e) => {
+likes.forEach((e) => {
     e.addEventListener('click', () => {
         const value = {
-            "value": true,
+            "value": e.classList.contains('like'),
             "post_id": e.dataset.postid,
             "user_id": e.dataset.userid,
             "commentaire_id": e.dataset.commentaireid
         };
 
-        send(value, e.previousElementSibling, e);
-    });
-});
-
-
-dislike.forEach((e) => {
-    e.addEventListener('click', () => {
-        const value = {
-            "value": false,
-            "post_id": e.dataset.postid,
-            "user_id": e.dataset.userid,
-            "commentaire_id": e.dataset.commentaireid
-        };
         send(value, e.previousElementSibling, e);
     });
 });
