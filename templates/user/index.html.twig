@@ -4,18 +4,22 @@
 <section class="h-auto">
   <div class="px-3 py-2">
     <h1>Information</h1>
-    <form enctype='multipart/form-data' method="post">
+    <form action={{ path('user_edit', {id: user.id}) }} enctype='multipart/form-data' method="post">
       <div class="mb-3">
         <label for="img" class="form-label">Image</label>
         <input name="img" class="form-control" type="file" id="img">
       </div>
       <div class="mb-3">
         <label for="username" class="form-label">Pseudo</label>
-        <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" value={{ user.username }}>
+        <input name="username" type="text" class="form-control" id="username" aria-describedby="usernameHelp" value={{ user.username }}>
       </div>
       <div class="mb-3">
-        <label for="password" class="form-label">Mot de Passe</label>
-        <input type="password" class="form-control" id="password">
+        <label for="new-password" class="form-label">Nouveau Mot de Passe</label>
+        <input name="new-password" type="password" class="form-control" id="new-password">
+      </div>
+      <div class="mb-3">
+        <label for="old-password" class="form-label">Ancien Mot de Passe *</label>
+        <input name="old-password" type="password" class="form-control" id="old-password" required>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
