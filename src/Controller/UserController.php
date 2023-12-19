@@ -44,26 +44,30 @@ class UserController extends AbstractController
         return $this->render('user/display.html.twig', ['user' => $user]);
     }
 
-    #[Route('/user/edit/{id}', name: 'user_edit', methods: ['POST'])]
+    #[Route('/user/edit/{id}', name: 'user_edit')]
     public function edit($id, Request $request)
     {
-        if(!empty($request->request->get('old-password')) && !empty($request->request->get('username'))){
+        $username = $request->request->get('username');
+        $oldPassword = $request->request->get('old-password');
+        $newPassword = $request->request->get('new-password');
+        $session = $request->getSession();
+
+        if(!empty($oldPassword) && !empty($username)){
             $data['id'] = $id;
-            $data['username'] = $request->request->get('username');
-            if(!empty($request->request->get('new-password'))){
-                $data['password'] = $request->request->get('new-password');
-            }
+            $data['username'] = $username;
             $user = $this->api->fetch('/user/edit', 'PUT', $this->jsonConverter->encodeToJson($data));
 
-            $oldPassword = $request->request->get('old-password');
-
-            $json = $this->jsonConverter->encodeToJson(['username' => $user['username'], 'password' => !empty($data['password']) ? $data['password'] : $oldPassword]);
+            $json = $this->jsonConverter->encodeToJson(['username' => $user['username'], 'password' => $oldPassword]);
             $response = $this->api->fetch("/login", "POST" , $json);
-            $session = $request->getSession();
+
+            sleep(5);
             $session->set('token', $response['token']);
-            $user = $this->api->fetch("/myself", "GET" , null);
-            $session->set('profile_picture', $user['photo']);
+            //$user = $this->api->fetch("/myself", "GET" , null);
+            //$session->set('profile_picture', $user['photo']);
+            //dd($request->getSession()->get('token'));
+            //dd($response);
+            dd($session);
         }
-        return $this->redirectToRoute('user');
+        //return $this->redirectToRoute('user');
     }
 }
