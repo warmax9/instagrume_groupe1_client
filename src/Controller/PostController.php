@@ -16,7 +16,6 @@ class PostController extends AbstractController
     public function __construct(private Api $api, private JsonConverter $jsonConverter)
     {
     }
-    
     #[Route('/{id}', name: 'post')]
     public function index($id): Response
     {
