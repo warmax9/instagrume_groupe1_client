@@ -17,9 +17,13 @@ class UserController extends AbstractController
     }
 
     #[Route('/user', name: 'user')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $user = $this->api->fetch("/myself", "GET", null);
+        if($user['is_modo']){
+            $users = $this->api->fetch("/user", 'GET', null);
+            return $this->render('user/index.html.twig', ['user' => $user, 'users' => $users]);
+        }
         return $this->render('user/index.html.twig', ['user' => $user]);
     }
 
@@ -69,5 +73,14 @@ class UserController extends AbstractController
             dd($session);
         }
         //return $this->redirectToRoute('user');
+    }
+
+    #[Route('/user/ban/{id}', name: 'user_ban')]
+    public function ban($id, Request $request)
+    {
+        $data['id'] = $id;
+        $data['is_banned'] = $request->request->get('is_banned') ? $request->request->get('is_banned') : true;
+        $this->api->fetch('/user/edit', 'PUT', $this->jsonConverter->encodeToJson($data));
+        return $this->redirectToRoute('user');
     }
 }
