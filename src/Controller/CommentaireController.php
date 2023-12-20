@@ -17,7 +17,11 @@ class CommentaireController extends AbstractController
     #[Route('/commentaire', methods: ['POST'])]
     public function commente(Request $request){
         $data = json_decode($request->getContent(), true);
+        $user = $this->api->fetch("/myself", "GET", null);
+        $data["user_id"] =  $user["id"];
         $response = $this->api->fetch("/commentaire", "POST" , $this->jsonConverter->encodeToJson($data));
-        
+        $post = $this->api->fetch(sprintf("/posts/%d", $data["post_id"]), "GET", null);
+        return $this->render('post/commentaire.html.twig', ['post' => $post, 'myId' => $user['id']]);
+        //return new Response($this->jsonConverter->encodeToJson($response));
     }
 }

@@ -1,17 +1,18 @@
-const likes = document.querySelectorAll(".like:not(.dislike),.dislike:not(.like)");
-
-likes.forEach((e) => {
-    e.addEventListener('click', () => {
-        const value = {
-            "value": e.classList.contains('like'),
-            "post_id": e.dataset.postid,
-            "user_id": e.dataset.userid,
-            "commentaire_id": e.dataset.commentaireid
-        };
-
-        send(value, e.previousElementSibling, e);
+function ecouter(){
+    var likes = document.querySelectorAll(".like:not(.dislike),.dislike:not(.like)");
+    likes.forEach((e) => {
+        e.addEventListener('click', () => {
+            const value = {
+                "value": e.classList.contains('like'),
+                "post_id": e.dataset.postid,
+                "user_id": e.dataset.userid,
+                "commentaire_id": e.dataset.commentaireid
+            };
+    
+            send(value, e.previousElementSibling, e);
+        });
     });
-});
+}
 
 function send(value, element, icon) {
     const currentNumber = parseInt(element.textContent, 10);
@@ -61,3 +62,4 @@ function send(value, element, icon) {
             console.error('Erreur lors de la requête :', error.message);
         });
 }
+ecouter();
