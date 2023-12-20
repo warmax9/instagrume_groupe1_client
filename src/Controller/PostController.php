@@ -27,16 +27,13 @@ class PostController extends AbstractController
         return $this->render('post/index.html.twig', ['post' => $post, 'myId' => null]);
     }
 
-    #[Route('/edit', name: 'post_edit', methods: ['GET','POST'])]
+    #[Route('/edit', name: 'post_edit', methods: ['POST'])]
     public function edit(Request $request)
     {
-        if(!empty($request->request->get('id')) && empty($request->request->get('del'))){
-            $data['id'] = $request->request->get('id');
-            if(!empty($request->request->get('is_open'))) $data['is_open'] = $request->request->get('is_open');
-            if(!empty($request->request->get('description'))) $data['description'] = $request->request->get('description');
-    
-            $this->api->fetch('/posts', "PUT", $this->jsonConverter->encodeToJson($data));   
-        } elseif (!empty($request->request->get('id')) && !empty($request->request->get('del'))) {
+        $content = json_decode($request->getContent(), true);
+        if(!empty($content['id']) && empty($content['del'])){    
+            $this->api->fetch('/posts', "PUT", $request->getContent());
+        } elseif (!empty($content['id']) && !empty($content['del'])) {
             $this->api->fetch('/posts/'.$request->request->get('id') , "DELETE", null);
         }
         return $this->redirectToRoute('home');

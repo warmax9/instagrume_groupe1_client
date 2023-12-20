@@ -21,8 +21,7 @@
                     </div>
                     <div class="modal-body">
                         <ion-icon class="btn btn-danger" id="btn-del" name="trash-outline" data-id={{ post.id }} ></ion-icon>
-                        {{ post.is_open }}
-                        {% if post.is_open == 1 %}
+                        {% if post.is_open == true %}
                             <ion-icon class="btn btn-secondary" id="btn-lock" name="lock-closed-outline" data-value="false" data-id={{ post.id }}></ion-icon>
                         {% else %}
                             <ion-icon class="btn btn-secondary" id="btn-lock" name="lock-open-outline" data-value="true" data-id={{ post.id }}></ion-icon>
