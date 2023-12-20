@@ -34,9 +34,6 @@
                             class="rounded-circle">
                         <h1 class="ms-2">{{ post.user.username|e }}</h1>
                     </div>
-                    <div class="mb-3">
-                        <h4>{{ post.description|e }}</h4>
-                    </div>
                 </div>
                 <div>
                     <div class="d-flex">
@@ -56,16 +53,24 @@
             </div>
         </div>
     </div>
+    <div class="mb-3">
+        <h4 class="fst-italic">{{ post.description|e }}</h4>
+    </div>
     <div class="post__wrappper d-flex flex-column px-3 py-2 mt-3" id="containerCommentaire">
         {% set vars = {'post': post, "myId" : myId} %}
         {% include './post/commentaire.html.twig' with vars %}
     </div>
-        <div class="input-group mb-3 mt-4">
-            <input type="text" id='commentaire' data-postId="{{post.id}}" data-commentaireId="{{null}}" class="form-control" placeholder="Laisser un commentaire">
-            <button type="button" class="btn btn-primary" id="CommenterButton">Commenter</button>
-        </div>
+    <div class="input-group mb-3 mt-4">
+        <input type="text" id='commentaire' data-postId="{{post.id}}" data-commentaireId="{{null}}" class="form-control" placeholder="Laisser un commentaire">
+        <button type="button" class="btn btn-primary" id="CommenterButton">Commenter</button>
+    </div>
     <pre>
         {{ dump(post) }}
     </pre>
 </section>
+<div id="container_popup">
+        <div class="d-flex justify-content-end mb-3"><img src="{{ asset('build/images/close.png') }}" class="comment-icon" onclick="closePopup()"></div>
+        <textarea class="mb-2" id='popup_textarea'></textarea>
+        <div class="d-flex justify-content-center "><button type="button" class="btn btn-primary" onclick="updateCommentaire()">Sauvegarder</button></div>
+    </div>
 {% endblock %}

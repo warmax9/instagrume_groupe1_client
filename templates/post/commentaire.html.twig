@@ -23,7 +23,11 @@
             <img style="height: 2rem;" src={{ "http://127.0.0.1:3000/images/user/" ~ com.user.photo|e }} alt=""
                 class="rounded-circle">
             <h1 class="ms-2">{{ com.user.username|e }}</h1>
-            <div class="d-flex justify-content-end w-100"><img src="{{ asset('build/images/chat.png') }}" class="chat-icon" onclick="displayInputComment(this)"></div>
+            <div class="d-flex justify-content-end w-100">
+                <img src="{{ asset('build/images/chat.png') }}" class="comment-icon me-2" onclick="displayInputComment(this)">
+                {% if com.user.id == myId %}<img src="{{ asset('build/images/pen.png') }}" class="comment-icon me-2"  onclick="displayPopup({{com.id}} ,'{{ com.content|e}}', {{post.id}})">
+                <img src="{{ asset('build/images/trash.png') }}" class="comment-icon" onclick="deleteCommenaire({{com.id}}, {{post.id}})">{% endif %}
+            </div>
         </div>
         <p>{{ com.content|e }}</p>
         {% set likes = 0 %}
@@ -44,15 +48,15 @@
         {% endif %}
         {% endfor %}
 
-        <div class="d-flex justify-content-around">
-            <div class="d-flex align-items-center">
-                <p class="m-0 cpt-like m-1">{{ likes }}</p>
-                <ion-icon class="like" data-commentaireId='{{ com.id|e }}' data-userId='{{ post.user.id|e }}'
+        <div class="d-flex justify-content-center">
+            <div class="d-flex align-items-center  me-5">
+                <p class="m-0 cpt-like  m-1">{{ likes }}</p>
+                <ion-icon class="like me-3" data-commentaireId='{{ com.id|e }}' data-userId='{{ post.user.id|e }}'
                     name="heart-outline" {% if userHasLiked==1 %} color="danger" {% endif %}></ion-icon>
             </div>
             <div class="d-flex align-items-center">
                 <p class="m-0 cpt-dislike m-1">{{ dislikes }}</p>
-                <ion-icon class="dislike" data-commentaireId='{{ com.id|e }}' data-userId='{{ post.user.id|e }}'
+                <ion-icon class="dislike me-3" data-commentaireId='{{ com.id|e }}' data-userId='{{ post.user.id|e }}'
                     name="heart-dislike-outline" {% if userHasDisliked==1 %} color="danger" {% endif
                     %}></ion-icon>
             </div>
@@ -87,19 +91,25 @@
                     <img style="height: 2rem;" src={{ "http://127.0.0.1:3000/images/user/" ~ child.user.photo|e }}
                         alt="" class="rounded-circle">
                     <h3 class="ms-2">{{ child.user.username|e }}</h3>
+                    <div class="d-flex justify-content-end w-100">
+                        {% if child.user.id == myId %}
+                            <img src="{{ asset('build/images/pen.png') }}" class="comment-icon me-2" onclick="displayPopup({{child.id}} , '{{ child.content|e}}, {{post.id}}')">
+                            <img src="{{ asset('build/images/trash.png') }}" class="comment-icon" onclick="deleteCommenaire({{child.id}}, {{post.id}})">
+                        {% endif %}
+                    </div>
                 </div>
                 <p>{{ child.content|e }}</p>
             </div>
-            <div class="d-flex justify-content-around">
-                <div class="d-flex align-items-center">
+            <div class="d-flex justify-content-center">
+                <div class="d-flex align-items-center me-5">
                     <p class="m-0 cpt-like m-1">{{ likes }}</p>
-                    <ion-icon class="like m-1" data-commentaireId='{{ child.id|e }}'
+                    <ion-icon class="like" data-commentaireId='{{ child.id|e }}'
                         data-userId='{{ post.user.id|e }}' name="heart-outline" {% if userHasLiked==1 %}
                         color="danger" {% endif %}></ion-icon>
                 </div>
                 <div class="d-flex align-items-center">
                     <p class="m-0 cpt-dislike m-1">{{ dislikes }}</p>
-                    <ion-icon class="dislike m-1" data-commentaireId='{{ child.id|e }}'
+                    <ion-icon class="dislike me-3" data-commentaireId='{{ child.id|e }}'
                         data-userId='{{ post.user.id|e }}' name="heart-dislike-outline" {% if userHasDisliked==1 %}
                         color="danger" {% endif %}></ion-icon>
                 </div>

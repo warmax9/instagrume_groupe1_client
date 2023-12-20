@@ -53,6 +53,30 @@ section{
     }
 
 }
-.chat-icon{
-    width: 50px;
+.comment-icon{
+    max-width: 25px;
+    height: 25px;
+}
+
+#container_popup{
+    
+}
+
+#container_popup {
+    display: none;
+    max-width: 800px ;
+    textarea{
+        width: 100%;
+        height: 70%;
+    }
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    //background-color: rgba(0, 0, 0, 0.5); /* Couleur de fond avec une opacité de 0.5 (pour une semi-transparence) */
+    width: 100%; /* Largeur de la div */
+    height: 200px; /* Hauteur de la div */
+    text-align: center; /* Centrer le texte */
+    padding: 20px; /* Espacement interne */
+    z-index: 1000; /* Valeur Z pour s'assurer que la div est au-dessus des autres éléments */
 }

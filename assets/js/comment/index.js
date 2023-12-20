@@ -8,7 +8,6 @@ function loadInputCommentaire() {
                 "commentaire_id": inputCommentaire.dataset.commentaireid,
                 "post_id": inputCommentaire.dataset.postid
             }
-            console.log(commentaire);
             sendCommentaire(commentaire);
             inputCommentaire.value = null;
         });
@@ -16,8 +15,6 @@ function loadInputCommentaire() {
 }
 
 function sendCommentaire(commentaire) {
-    console.log("send");
-    console.log(commentaire);
     let url = "/commentaire";
     fetch(url, {
         method: 'POST',
@@ -101,7 +98,7 @@ function sendLike(value, element, icon) {
             console.error('Erreur lors de la requête :', error.message);
         });
 }
-newListLike(); // les onclique ne fonctionne pas 
+newListLike();
 loadInputCommentaire();
 
 window.displayInputComment = function displayInputComment(img) {
@@ -113,5 +110,74 @@ window.displayInputComment = function displayInputComment(img) {
     else{
         divInput.classList.add("d-none");
     }
-    
+}
+
+window.deleteCommenaire = function deleteCommenaire(commentaireId, postId){
+    const url = "/commentaire/" + commentaireId;
+    fetch(url, {
+        method: 'DELETE'
+    })
+        .then(response => response.text())
+        .then(data => {
+            if (data.error) {
+                console.error('Erreur serveur :', data.error);
+            }
+            else {
+                refreshComments(postId);
+            }
+        })
+}
+
+function refreshComments(postId){
+    const url = "/commentaire/" + postId;
+    fetch(url, {
+        method: 'GET',
+    })
+        .then(response => response.text())
+        .then(data => {
+            if (data.error) {
+                console.error('Erreur serveur :', data.error);
+            }
+            else {
+                const container = document.getElementById("containerCommentaire");
+                container.innerHTML = data;
+            }
+        })
+}
+
+window.closePopup = function closePopup(){
+    var popup = document.getElementById("container_popup");
+    popup.style.display = "none";
+}
+
+window.displayPopup = function displayPopup(id, content , postId){
+    var popup = document.getElementById("container_popup");
+    popup.style.display = "block";
+    var textarea = document.getElementById("popup_textarea");
+    textarea.value = content;
+    textarea.dataset.id = id;
+    textarea.dataset.postId = postId;
+}
+
+window.updateCommentaire = function updateCommentaire(){
+    const textarea = document.getElementById("popup_textarea")
+    const commentaire = {
+        "id" : textarea.dataset.id,
+        "content" : textarea.value
+    }
+    const url = "/commentaire";
+    fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify(commentaire),
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error('Erreur serveur :', data.error);
+            }
+            else {
+                //refreshComments(textarea.dataset.postid);
+                console.log("ok");
+            }
+        })
 }

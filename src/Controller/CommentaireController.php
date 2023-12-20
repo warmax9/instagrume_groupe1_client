@@ -21,6 +21,25 @@ class CommentaireController extends AbstractController
         $data["user_id"] =  $user["id"];
         $response = $this->api->fetch("/commentaire", "POST" , $this->jsonConverter->encodeToJson($data));
         return $this->render('post/commentaire.html.twig', ['post' => $response, 'myId' => $user['id']]);
-        return new Response($this->jsonConverter->encodeToJson($response));
+        //return new Response($this->jsonConverter->encodeToJson($response));
+    }
+
+    #[Route('/commentaire/{id}', methods: ['DELETE'])]
+    public function delete($id){
+        $this->api->fetch("/commentaire/". $id, "DELETE" , null);
+        return new Response("succes");
+    }
+
+    #[Route('/commentaire/{postId}', methods: ['GET'])]
+    public function getPost($postId){
+        $user = $this->api->fetch("/myself", "GET", null);
+        $response = $this->api->fetch("/posts/". $postId, "GET" , null);
+        return $this->render('post/commentaire.html.twig', ['post' => $response, 'myId' => $user['id']]);
+    }
+
+    #[Route('/commentaire', methods: ['PUT'])]
+    public function updateComment(Request $request){
+        $response = $this->api->fetch("/commentaire", "PUT" , $request);
+        return new Response($request);
     }
 }
