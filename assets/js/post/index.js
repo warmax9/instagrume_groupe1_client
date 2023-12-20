@@ -8,16 +8,17 @@ btnLock.forEach(btn => {
             "is_open": btn.dataset.value
         }
         console.log(value);
-        fetch('/post',
+        fetch('/post/edit',
         {
-            method: 'PUT',
+            method: 'POST',
             body: JSON.stringify(value),
             headers: {
                 'Content-Type': 'application/json',
             }
         })
-        .then((res) => {
-            console.log(res.json())
+        .then(() => {
+            console.log('tkt')
+            location.reload()
         });
     })
 })
