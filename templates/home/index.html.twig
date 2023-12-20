@@ -3,12 +3,32 @@
 {% block links %}
     {{ encore_entry_link_tags('home_css') }}
     {{ encore_entry_script_tags('home') }}
+    {{ encore_entry_script_tags('post') }}
 {% endblock %}
 
 {% block body %}
 <section class="home d-grid gap-3 p-3">
     {% for post in posts %}
-    <div class="home__post rounded">
+    <div class="home__post rounded position-relative">
+        <ion-icon class="position-absolute btn btn-primary top-0 end-0" name="create-outline" data-bs-toggle="modal" data-bs-target="#edit"></ion-icon>
+        <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleEditLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ion-icon class="btn btn-danger" id="btn-del" name="trash-outline" data-id={{ post.id }} ></ion-icon>
+                        {% if post.is_open %}
+                            <ion-icon class="btn btn-secondary" id="btn-lock" name="lock-closed-outline" data-value="true" data-id={{ post.id }}></ion-icon>
+                        {% else %}
+                            <ion-icon class="btn btn-secondary" id="btn-lock" name="lock-open-outline" data-value="false" data-id={{ post.id }}></ion-icon>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
         <img src={{ "http://127.0.0.1:3000/images/post/" ~ post.image|e }} alt="..." class="rounded-top w-100">
         <div class="p-3">
             <div class="d-flex home__post__user">
