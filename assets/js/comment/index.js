@@ -1,17 +1,23 @@
-const commentaireBouton = document.querySelectorAll('#CommenterButton');
-commentaireBouton.forEach((e) => {
-    e.addEventListener('click', () => {
-        const inputCommentaire = e.parentElement.querySelector("input");
-        const commentaire = {
-            "content": inputCommentaire.value,
-            "commentaire_id": inputCommentaire.dataset.commentaireid,
-            "post_id": inputCommentaire.dataset.postid
-        }
-        console.log(commentaire);
-        sendCommentaire(commentaire);
+function loadInputCommentaire() {
+    const commentaireBouton = document.querySelectorAll('#CommenterButton');
+    commentaireBouton.forEach((e) => {
+        e.addEventListener('click', () => {
+            const inputCommentaire = e.parentElement.querySelector("input");
+            const commentaire = {
+                "content": inputCommentaire.value,
+                "commentaire_id": inputCommentaire.dataset.commentaireid,
+                "post_id": inputCommentaire.dataset.postid
+            }
+            console.log(commentaire);
+            sendCommentaire(commentaire);
+            inputCommentaire.value = null;
+        });
     });
-});
+}
+
 function sendCommentaire(commentaire) {
+    console.log("send");
+    console.log(commentaire);
     let url = "/commentaire";
     fetch(url, {
         method: 'POST',
@@ -26,6 +32,7 @@ function sendCommentaire(commentaire) {
                 const container = document.getElementById("containerCommentaire");
                 container.innerHTML = data;
                 newListLike();
+                loadInputCommentaire();
             }
         })
 }
@@ -94,8 +101,17 @@ function sendLike(value, element, icon) {
             console.error('Erreur lors de la requête :', error.message);
         });
 }
-newListLike();
+newListLike(); // les onclique ne fonctionne pas 
+loadInputCommentaire();
 
-function displayClosestInput(clickedImage) {
-    console.log(clickedImage);
+window.displayInputComment = function displayInputComment(img) {
+    const divGrandParent = img.parentElement.parentElement;
+    var divInput = divGrandParent.parentElement.querySelector(".input-container");
+    if(divInput.classList.contains("d-none")){
+        divInput.classList.remove("d-none");
+    }
+    else{
+        divInput.classList.add("d-none");
+    }
+    
 }

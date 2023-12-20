@@ -67,7 +67,7 @@
                     <ion-icon class="dislike" data-postId='{{ post.id|e }}' data-userId='{{ post.user.id|e }}' name="heart-dislike-outline" {% if userHasDisliked == 1 %} style="color: red;"{% endif %}></ion-icon>
                 </div>
             </div>
-            <a href={{ path('post', {id: post.id}) }} class="btn btn-primary">En savoir plus</a>
+           
         </div>
       </div>
     {% endfor %}
