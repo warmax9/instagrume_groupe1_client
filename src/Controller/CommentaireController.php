@@ -39,7 +39,8 @@ class CommentaireController extends AbstractController
 
     #[Route('/commentaire', methods: ['PUT'])]
     public function updateComment(Request $request){
-        $response = $this->api->fetch("/commentaire", "PUT" , $request);
-        return new Response($request);
+        $data = json_decode($request->getContent(), true);
+        $response = $this->api->fetch("/commentaire", "PUT" , $this->jsonConverter->encodeToJson($data));
+        return new Response($this->jsonConverter->encodeToJson(["reponse" => "ok"]));
     }
 }

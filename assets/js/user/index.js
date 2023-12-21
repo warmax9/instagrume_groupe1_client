@@ -6,12 +6,13 @@ btnBan.forEach(btn => {
             "id": btn.dataset.id,
             "is_banned": btn.dataset.value
         }
+        console.log(value);
         fetch('/user/ban/' + btn.dataset.id,
         {
             method: 'POST',
             body: JSON.stringify(value),
         }).then(() => {
-            location.reload()
+            location.reload();
         })
     })
 })

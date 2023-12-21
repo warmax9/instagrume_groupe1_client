@@ -1,3 +1,4 @@
+
 function loadInputCommentaire() {
     const commentaireBouton = document.querySelectorAll('#CommenterButton');
     commentaireBouton.forEach((e) => {
@@ -8,13 +9,16 @@ function loadInputCommentaire() {
                 "commentaire_id": inputCommentaire.dataset.commentaireid,
                 "post_id": inputCommentaire.dataset.postid
             }
-            sendCommentaire(commentaire);
+            if(commentaire.content != ""){
+                sendCommentaire(commentaire);
+            }
             inputCommentaire.value = null;
         });
     });
 }
 
 function sendCommentaire(commentaire) {
+    console.log(commentaire);
     let url = "/commentaire";
     fetch(url, {
         method: 'POST',
@@ -160,7 +164,7 @@ window.displayPopup = function displayPopup(id, content , postId){
 }
 
 window.updateCommentaire = function updateCommentaire(){
-    const textarea = document.getElementById("popup_textarea")
+    const textarea = document.getElementById("popup_textarea");
     const commentaire = {
         "id" : textarea.dataset.id,
         "content" : textarea.value
@@ -176,8 +180,8 @@ window.updateCommentaire = function updateCommentaire(){
                 console.error('Erreur serveur :', data.error);
             }
             else {
-                //refreshComments(textarea.dataset.postid);
-                console.log("ok");
+                refreshComments(textarea.dataset.postId);
+                closePopup();
             }
         })
 }

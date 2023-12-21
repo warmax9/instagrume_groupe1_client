@@ -93,7 +93,7 @@
                     <h3 class="ms-2">{{ child.user.username|e }}</h3>
                     <div class="d-flex justify-content-end w-100">
                         {% if child.user.id == myId %}
-                            <img src="{{ asset('build/images/pen.png') }}" class="comment-icon me-2" onclick="displayPopup({{child.id}} , '{{ child.content|e}}, {{post.id}}')">
+                            <img src="{{ asset('build/images/pen.png') }}" class="comment-icon me-2" onclick="displayPopup({{child.id}} , '{{ child.content|e}}', {{post.id}})">
                             <img src="{{ asset('build/images/trash.png') }}" class="comment-icon" onclick="deleteCommenaire({{child.id}}, {{post.id}})">
                         {% endif %}
                     </div>

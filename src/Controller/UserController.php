@@ -79,7 +79,7 @@ class UserController extends AbstractController
     public function ban($id, Request $request)
     {
         $data['id'] = $id;
-        $data['is_banned'] = $request->request->get('is_banned') ? $request->request->get('is_banned') : true;
+        $data['is_banned'] = $request->request->get('is_banned') ? $request->request->get('is_banned') : false;
         $this->api->fetch('/user/edit', 'PUT', $this->jsonConverter->encodeToJson($data));
         return $this->redirectToRoute('user');
     }
