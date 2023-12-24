@@ -11,8 +11,8 @@
     {% for post in posts %}
     <div class="home__post rounded position-relative">
         {% if app.session.get('token')|default(null) %}
-        <ion-icon class="position-absolute btn btn-primary top-0 end-0" name="create-outline" data-bs-toggle="modal" data-bs-target="#edit"></ion-icon>
-        <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleEditLabel" aria-hidden="true">
+        <ion-icon class="position-absolute btn btn-primary top-0 end-0" name="create-outline" data-bs-toggle="modal" data-bs-target={{ "#edit" ~ post.id }}></ion-icon>
+        <div class="modal fade" id={{ "edit" ~ post.id }} tabindex="-1" aria-labelledby="exampleEditLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -21,11 +21,7 @@
                     </div>
                     <div class="modal-body">
                         <ion-icon class="btn btn-danger" id="btn-del" name="trash-outline" data-id={{ post.id }} ></ion-icon>
-                        {% if post.is_open == true %}
-                            <ion-icon class="btn btn-secondary" id="btn-lock" name="lock-closed-outline" data-value="false" data-id={{ post.id }}></ion-icon>
-                        {% else %}
-                            <ion-icon class="btn btn-secondary" id="btn-lock" name="lock-open-outline" data-value="true" data-id={{ post.id }}></ion-icon>
-                        {% endif %}
+                        <ion-icon class="btn btn-secondary" id="btn-lock" name="{{ post.is_open ? 'lock-open-outline' : 'lock-closed-outline' }}" data-value="{{ post.is_open ? false : true }}" data-id={{ post.id }}></ion-icon>
                     </div>
                 </div>
             </div>
