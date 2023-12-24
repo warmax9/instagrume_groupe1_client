@@ -6,13 +6,17 @@
     background-repeat: no-repeat;
     &__container {
         transition: transform 1s;
-        transform: translateX(50%);
+        transform: translateX(0);
         width: 100%;
+        &.left{
+            transform: translateX(0);
+        }
         @media (min-width: 768px) {
             width: 50%;
-        }
-        &.left{
-            transform: translateX(-50%);
+            transform: translateX(50%);
+            &.left{
+                transform: translateX(-50%);
+            }
         }
     }
 }
