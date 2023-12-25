@@ -35,6 +35,13 @@ class AuthController extends AbstractController
             $session->set('token', $responseObject['token']);
             $user = $this->api->fetch("/myself", "GET" , null);
             $session->set('profile_picture', $user['photo']);
+            $session->set('myId', $user['id']);
+            if(in_array("ROLE_ADMIN", $user['roles'])){
+                $session->set('role', 'admin');
+            }
+            else{
+                $session->set('role', 'user');
+            }
             return $this->redirect('/');
         }
         return $this->render('auth/login.html.twig');

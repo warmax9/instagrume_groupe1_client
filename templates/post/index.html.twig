@@ -60,10 +60,12 @@
         {% set vars = {'post': post, "myId" : myId} %}
         {% include './post/commentaire.html.twig' with vars %}
     </div>
-    <div class="input-group mb-3 mt-4">
-        <input type="text" id='commentaire' data-postId="{{post.id}}" data-commentaireId="{{null}}" class="form-control" placeholder="Laisser un commentaire">
-        <button type="button" class="btn btn-primary" id="CommenterButton">Commenter</button>
-    </div>
+    {% if post.is_open == 1 %}
+        <div class="input-group mb-3 mt-4">
+            <input type="text" id='commentaire' data-postId="{{post.id}}" data-commentaireId="{{null}}" class="form-control" placeholder="Laisser un commentaire">
+            <button type="button" class="btn btn-primary" id="CommenterButton">Commenter</button>
+        </div>
+    {% endif %}
     <pre>
         {{ dump(post) }}
     </pre>

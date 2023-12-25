@@ -59,27 +59,26 @@ class UserController extends AbstractController
         if(!empty($oldPassword) && !empty($username)){
             $data['id'] = $id;
             $data['username'] = $username;
+
             $user = $this->api->fetch('/user/edit', 'PUT', $this->jsonConverter->encodeToJson($data));
-
-            $json = $this->jsonConverter->encodeToJson(['username' => $user['username'], 'password' => $oldPassword]);
+            $json = $this->jsonConverter->encodeToJson(['username' => $data['username'], 'password' => $oldPassword]);
             $response = $this->api->fetch("/login", "POST" , $json);
-
             sleep(5);
             $session->set('token', $response['token']);
             //$user = $this->api->fetch("/myself", "GET" , null);
             //$session->set('profile_picture', $user['photo']);
             //dd($request->getSession()->get('token'));
             //dd($response);
-            dd($session);
+            //dd($session);
         }
-        //return $this->redirectToRoute('user');
+        return $this->redirectToRoute('user');
     }
 
     #[Route('/user/ban/{id}', name: 'user_ban')]
     public function ban($id, Request $request)
     {
         $data['id'] = $id;
-        $data['is_banned'] = $request->request->get('is_banned') ? $request->request->get('is_banned') : false;
+        $data['is_banned'] = $request->request->get('is_banned') ? $request->request->get('is_banned') : true;
         $this->api->fetch('/user/edit', 'PUT', $this->jsonConverter->encodeToJson($data));
         return $this->redirectToRoute('user');
     }
