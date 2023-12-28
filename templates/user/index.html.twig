@@ -7,7 +7,10 @@
 {% block body %}
 <section class="h-auto">
   <div class="px-3 py-2">
-    <h1>Information</h1>
+    <div class="d-flex justify-content-between">
+      <h1>Information</h1>
+      <a href="/user/{{user.id}}"><h3>Voir mes post</h3></a>
+    </div>
     <form action={{ path('user_edit', {id: user.id}) }} enctype='multipart/form-data' method="post">
       <div class="mb-3">
         <label for="img" class="form-label">Image</label>

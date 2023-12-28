@@ -28,7 +28,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <ion-icon class="btn btn-danger" id="btn-del" name="trash-outline" data-id={{ post.id }} ></ion-icon>
+                        <ion-icon class="btn btn-danger" id="btn-del" name="trash-outline" onclick="deletePost({{post.id}})" ></ion-icon>
                         <ion-icon class="btn btn-secondary" id="btn-lock" name="{{ post.is_open ? 'lock-open-outline' : 'lock-closed-outline' }}" data-value="{{ post.is_open ? false : true }}" data-id={{ post.id }}></ion-icon>
                     </div>
                 </div>

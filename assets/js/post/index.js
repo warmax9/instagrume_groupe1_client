@@ -31,3 +31,19 @@ btnDel.forEach(btn => {
         });
     })
 })
+
+window.deletePost  = function deletePost(id){
+    const url = "/post/" + id;
+    fetch(url, {
+        method: 'DELETE'
+    })
+        .then(response => response.text())
+        .then(data => {
+            if (data.error) {
+                console.error('Erreur serveur :', data.error);
+            }
+            else {
+                location.reload(true);
+            }
+        })
+} 
