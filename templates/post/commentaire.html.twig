@@ -28,6 +28,8 @@
                     {% if com.user.id == myId %}
                         <img src="{{ asset('build/images/pen.png') }}" class="comment-icon me-2"  onclick="displayPopup({{com.id}} ,'{{ com.content|e}}', {{post.id}})">
                         <img src="{{ asset('build/images/trash.png') }}" class="comment-icon" onclick="deleteCommenaire({{com.id}}, {{post.id}})">
+                    {% elseif app.session.get('role') == "admin" %}
+                        <img src="{{ asset('build/images/trash.png') }}" class="comment-icon" onclick="deleteCommenaire({{com.id}}, {{post.id}})">
                     {% endif %}
                 {% endif %}
             </div>
@@ -55,12 +57,12 @@
             <div class="d-flex align-items-center  me-5">
                 <p class="m-0 cpt-like  m-1">{{ likes }}</p>
                 <ion-icon class="like me-3" data-commentaireId='{{ com.id|e }}' data-userId='{{ post.user.id|e }}'
-                    name="heart-outline" {% if userHasLiked==1 %} color="danger" {% endif %}></ion-icon>
+                    name="heart-outline" {% if userHasLiked==1 %} style="color: red;" {% endif %}></ion-icon>
             </div>
             <div class="d-flex align-items-center">
                 <p class="m-0 cpt-dislike m-1">{{ dislikes }}</p>
                 <ion-icon class="dislike me-3" data-commentaireId='{{ com.id|e }}' data-userId='{{ post.user.id|e }}'
-                    name="heart-dislike-outline" {% if userHasDisliked==1 %} color="danger" {% endif
+                    name="heart-dislike-outline" {% if userHasDisliked==1 %} style="color: red;" {% endif
                     %}></ion-icon>
             </div>
         </div>
@@ -98,6 +100,8 @@
                         {% if child.user.id == myId and post.is_open == 1 %}
                             <img src="{{ asset('build/images/pen.png') }}" class="comment-icon me-2" onclick="displayPopup({{child.id}} , '{{ child.content|e}}', {{post.id}})">
                             <img src="{{ asset('build/images/trash.png') }}" class="comment-icon" onclick="deleteCommenaire({{child.id}}, {{post.id}})">
+                        {% elseif app.session.get('role') == "admin" and post.is_open == 1 %}
+                        <img src="{{ asset('build/images/trash.png') }}" class="comment-icon" onclick="deleteCommenaire({{com.id}}, {{post.id}})">
                         {% endif %}
                     </div>
                 </div>
@@ -108,13 +112,13 @@
                     <p class="m-0 cpt-like m-1">{{ likes }}</p>
                     <ion-icon class="like" data-commentaireId='{{ child.id|e }}'
                         data-userId='{{ post.user.id|e }}' name="heart-outline" {% if userHasLiked==1 %}
-                        color="danger" {% endif %}></ion-icon>
+                        style="color: red;" {% endif %}></ion-icon>
                 </div>
                 <div class="d-flex align-items-center">
                     <p class="m-0 cpt-dislike m-1">{{ dislikes }}</p>
                     <ion-icon class="dislike me-3" data-commentaireId='{{ child.id|e }}'
                         data-userId='{{ post.user.id|e }}' name="heart-dislike-outline" {% if userHasDisliked==1 %}
-                        color="danger" {% endif %}></ion-icon>
+                        style="color: red;" {% endif %}></ion-icon>
                 </div>
             </div>
             {% endfor %}

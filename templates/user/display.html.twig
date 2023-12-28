@@ -5,6 +5,7 @@
     {{ encore_entry_link_tags('home_css') }}
     {{ encore_entry_script_tags('home') }}
     {{ encore_entry_script_tags('post') }}
+    {{ encore_entry_script_tags('profile') }}
 {% endblock %}
 
 
@@ -20,24 +21,63 @@
     <section class="home d-grid gap-3 p-3">
         {% for post in user.post %}
         <div class="home__post rounded position-relative">
+            {% if user.id == app.session.get('myId') or app.session.get('role') == 'admin' %}
+                <ion-icon class="position-absolute btn btn-danger top-0 end-0" name="trash-outline" data-bs-toggle="modal" data-bs-target={{ "#delete" ~ post.id }}></ion-icon>
+            {% endif %}
+            <div class="modal fade" id={{ "delete" ~ post.id }} tabindex="-1" aria-labelledby="exampleEditLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Êtes-vous sûr de vouloir supprimer ce post ?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body d-flex justify-content-around">
+                            <button type="button" class="btn btn-danger" onclick="deletePost({{post.id}})">Oui</button>
+                            <button type="button" class="btn btn-primary" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <img src={{ "http://127.0.0.1:3000/images/post/" ~ post.image|e }} alt="..." class="rounded-top w-100">
             <div class="p-3">
-                <p class="mt-1">{{ post.description|e }}</p>
+                <p class="mt-1">{{ post.description|length > 100 ? post.description|slice(0, 100) ~ '...' : post.description }} {% if user.id == app.session.get('myId') %}<ion-icon name="pencil-outline" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target={{ "#edit" ~ post.id }}></ion-icon>{% endif %}</p>
+                <div class="modal fade" id={{ "edit" ~ post.id }} tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="editModalLabel">Modifier la description</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <textarea id="textarea-edit">{{ post.description|e }}</textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" onclick="editPost({{post.id}}, this)">Enregistrer</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {% set likes = 0 %}
                 {% set dislikes = 0 %}
                 {% set userHasLiked = false %}
                 {% set userHasDisliked = false %}
 
                 {% for like in post.likes %}
-                    {% if like.value == true %}
-                        {% set likes = likes + 1 %}
-                        {% if like.user == app.session.get('myId') %}
+                {% if like.user is iterable %}
+                    {% set userId = like.user.id %}
+                {% else %}
+                        {% set userId = like.user %}
+                {% endif %}
+                        {% if userId == app.session.get('myId') %}
                             {% set userHasLiked = true %}
                         {% endif %}
+                    {% if like.value == true %}
+                        {% set likes = likes + 1 %}
                     {% elseif like.value == false %}
                         {% set dislikes = dislikes + 1 %}
-                        {% if like.user == app.session.get('myId') %}
-                                    {% set userHasDisliked = true %}
+                        {% if userId == app.session.get('myId') %}
+                            {% set userHasDisliked = true %}
                         {% endif %}
                     {% endif %}
                 {% endfor %}
@@ -51,12 +91,11 @@
                         <ion-icon class="dislike" data-postId='{{ post.id|e }}' name="heart-dislike-outline" {% if userHasDisliked == 1 %} style="color: red;"{% endif %}></ion-icon>
                     </div>
                 </div>
-            <a href={{ path('post', {id: post.id}) }} class="btn btn-primary">En savoir plus</a>
+            <a class="btn btn-primary" href={{ path('post', {id: post.id}) }}>En savoir plus</a>
             </div>
         </div>
         {% endfor %}
     </section>
-    <pre>
-        {{ dump(user) }}
-    </pre>
+
+
 {% endblock %}

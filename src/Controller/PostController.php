@@ -55,4 +55,15 @@ class PostController extends AbstractController
 
         return $this->redirectToRoute('home');
     }
+
+    #[Route('/{id}', methods: ['DELETE'])]
+    public function delete($id){
+        $this->api->fetch('/posts/' . $id, "DELETE", null);
+    }
+
+    #[Route('/edit', methods: ['PUT'])]
+    public function editDescription(Request $request){
+        $response = $this->api->fetch('/posts', "PUT", $request->getContent());
+        return new Response($this->jsonConverter->encodeToJson($response));
+    }
 }

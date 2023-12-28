@@ -18,8 +18,9 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home', methods: ['GET'])]
     public function index(Request $request): Response
     {
-        $url = sprintf('/TopPost?filter=%s', $request->query->get('filter'));
-        $posts = $this->api->fetch($url, "GET", null);
+        //$url = sprintf('/TopPost?filter=%s', $request->query->get('filter'));
+        //$posts = $this->api->fetch($url, "GET", null);
+        $posts = $this->api->fetch("/posts", "GET", null);
         $user = $this->api->fetch("/myself", "GET", null);
         if(is_array($user)){
             return $this->render('home/index.html.twig', ["posts" => $posts, "myId" => $user["id"]]);
