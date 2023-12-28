@@ -7,6 +7,14 @@
 {% endblock %}
 
 {% block body %}
+<section class="h-auto p-3">
+    <h1>Top post</h1>
+    <select class="form-select" aria-label="Default select example" onchange="location = this.value;">
+        <option value="{{ path('home', {filter: 'week'}) }}" {{ app.request.get('filter') == 'week' ? 'selected' : '' }} >Semaine</option>
+        <option value="{{ path('home', {filter: 'year'}) }}" {{ app.request.get('filter') == 'year' ? 'selected' : '' }}>Année</option>
+        <option value="{{ path('home', {filter: 'month'}) }}" {{ app.request.get('filter') == 'month' ? 'selected' : '' }} >Mois</option>
+    </select>
+</section>
 <section class="home d-grid gap-3 p-3">
     {% for post in posts %}
     <div class="home__post rounded position-relative">
