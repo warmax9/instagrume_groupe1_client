@@ -74,11 +74,12 @@ class UserController extends AbstractController
         return $this->redirectToRoute('user');
     }
 
-    #[Route('/user/ban/{id}', name: 'user_ban')]
+    #[Route('/user/ban/{id}', name: 'user_ban', methods: ['POST'])]
     public function ban($id, Request $request)
     {
+        $content = json_decode($request->getContent(), true);
         $data['id'] = $id;
-        $data['is_banned'] = $request->request->get('is_banned') ? $request->request->get('is_banned') : true;
+        $data["is_banned"] = "ok";
         $this->api->fetch('/user/edit', 'PUT', $this->jsonConverter->encodeToJson($data));
         return $this->redirectToRoute('user');
     }

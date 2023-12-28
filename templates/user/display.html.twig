@@ -21,6 +21,13 @@
     <section class="home d-grid gap-3 p-3">
         {% for post in user.post %}
         <div class="home__post rounded position-relative">
+
+            {% if app.session.get('role') == "admin" %}
+                <ion-icon class="position-absolute btn btn-primary top-0" id="btn-lock" name="{{ post.is_open ? 'lock-open-outline' : 'lock-closed-outline' }}" data-value="{{ post.is_open ? false : true }}" data-id={{ post.id }}></ion-icon>
+            {% endif %}
+
+
+
             {% if user.id == app.session.get('myId') or app.session.get('role') == 'admin' %}
                 <ion-icon class="position-absolute btn btn-danger top-0 end-0" name="trash-outline" data-bs-toggle="modal" data-bs-target={{ "#delete" ~ post.id }}></ion-icon>
             {% endif %}

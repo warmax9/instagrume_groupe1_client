@@ -36,9 +36,15 @@
             <a href="{{ path('logout') }}">
                 <ion-icon class="btn btn-primary" name="log-out-outline"></ion-icon>
             </a>
-            <a href="{{ path('user') }}">
-                <img src={{ "http://127.0.0.1:3000/images/user/" ~ app.session.get('profile_picture') }} alt="" class="rounded-circle" style="height: 2rem;">
-            </a>
+                {% if app.session.get('profile_picture') == "null" %}
+                    <a href="{{ path('user') }}" class="text-body d-flex py-2 px-3">
+                        <ion-icon size="large" name="person-circle-outline"></ion-icon>
+                    </a>
+                {% else %}
+                    <a href="{{ path('user') }}">
+                        <img src={{ "http://127.0.0.1:3000/images/user/" ~ app.session.get('profile_picture') }} alt="" class="rounded-circle" style="height: 2rem;">
+                    </a>
+                {% endif %}
         {% else %}
             <a href="{{ path('auth') }}" class="text-body d-flex py-2 px-3">
                 <ion-icon size="large" name="person-circle-outline"></ion-icon>

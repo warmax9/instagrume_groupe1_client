@@ -8,6 +8,11 @@
 {% block nav %}{% endblock %}
 
 {% block body %}
+{% if isBanned is defined %}
+    <script>
+        alert("vous avez été bannie");
+    </script>
+{% endif %}
 <section class="auth d-flex justify-content-center align-items-center">
     <div class="auth__container p-3 bg-body h-100 d-flex flex-column align-items-center justify-content-center rounded-start">
     </div>

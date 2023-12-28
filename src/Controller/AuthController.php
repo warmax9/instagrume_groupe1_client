@@ -31,9 +31,15 @@ class AuthController extends AbstractController
         if (!empty($username) && !empty($password)) {
             $data = $this->jsonConverter->encodeToJson(['username' => $username, 'password' => $password]);
             $responseObject = $this->api->fetch("/login", "POST" , $data);
+            if($responseObject['token'] == null){
+                return $this->redirect('/auth');
+            }
             $session = $request->getSession();
             $session->set('token', $responseObject['token']);
             $user = $this->api->fetch("/myself", "GET" , null);
+            if($user['is_banned']){
+                return $this->render('auth/auth.html.twig', ["isBanned" => true]);
+            }
             $session->set('profile_picture', $user['photo']);
             $session->set('myId', $user['id']);
             if(in_array("ROLE_ADMIN", $user['roles'])){
@@ -55,7 +61,7 @@ class AuthController extends AbstractController
         if(!empty($username) && !empty($password)){
                 $data = $this->jsonConverter->encodeToJson(['username' => $username, 'password' => $password]);
                 $responseObject = $this->api->fetch("/register", "POST" , $data);
-                return $this->redirect('/');
+                return $this->redirect('/auth');
         }
         return $this->render('auth/register.html.twig');
     }
